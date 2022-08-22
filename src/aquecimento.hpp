@@ -3,11 +3,18 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
+#include <vector>
 #include <fstream>
-#define MAXTAM 10
+#include <sstream>
+
+#define MAXTAM 5
 
 using namespace std;
 
 void writeText();
+void readMatrix();
+
+void tokenizerVector();
 
 #endif
