@@ -8,13 +8,11 @@
 #include <fstream>
 #include <sstream>
 
-#define MAXTAM 5
+#define MAXTAM 6
 
 using namespace std;
 
-void writeText();
-void readMatrix();
-
-void tokenizerVector();
+void writeText();	//Criação de uma matriz no arquivo txt
+void readMatrix();	//Lê a matriz, tokeniza os elementos  e 
 
 #endif
