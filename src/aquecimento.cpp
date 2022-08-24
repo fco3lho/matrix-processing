@@ -20,9 +20,9 @@ void writeText(){
 }
 
 void readMatrix(){
+	vector<string> token;
 	string numb;
 	ifstream file;
-	vector<string> token;
 
 	int initialLine, initialColumn, finalLine, finalColumn;
 	int count = 0, countColumn = 0;
@@ -69,11 +69,41 @@ void readMatrix(){
 			}	
 		}
 
+
+
 		int size = token.size();
-		
+		int vetNumbers[size];
+
 		for(int i = 0; i < size; i++){
-			cout << i << ":\t" << token[i] << endl;
+			vetNumbers[i] = stoi(token[i]);
+			cout << i << ":\t" << vetNumbers[i] << endl;
 		}
+
+
+
+		int dynamicLine = (finalLine - initialLine) + 1;
+		int dynamicColumn = (finalColumn - initialColumn) + 1;
+		int **dynamicMatrix;
+
+		dynamicMatrix = new int *[dynamicLine];
+
+		for(int i = 0; i < dynamicLine; i++){
+			dynamicMatrix[i] = new int[dynamicColumn];
+		}
+
+		cout << endl << endl;
+
+		int k = 0;
+
+		for(int i = 0; i < dynamicLine; i++){
+			for(int j = 0; j < dynamicColumn; j++){
+				dynamicMatrix[i][j] = vetNumbers[k];
+				cout << dynamicMatrix[i][j] << "\t";
+				k++;
+			}
+			cout << endl;
+		}
+
 
 		file.close();
 	}
