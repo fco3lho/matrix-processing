@@ -26,7 +26,6 @@ void readMatrix(){
 
 	int initialLine, initialColumn, finalLine, finalColumn;
 	int count = 0, countColumn = 0;
-	int maxElements;
 
 	cout << "Insira o número da linha inicial da matriz interna: ";
 	cin >> initialLine;
@@ -40,7 +39,7 @@ void readMatrix(){
 	cout << "Insira o número da coluna final da matriz interna: ";
 	cin >> finalColumn;
 
-	maxElements = ((finalLine+1) - initialLine) * ((finalColumn+1) - initialColumn);
+	int maxElements = ((finalLine+1) - initialLine) * ((finalColumn+1) - initialColumn);
 
 	file.open("matrix.txt");
 
@@ -69,8 +68,6 @@ void readMatrix(){
 			}	
 		}
 
-
-
 		int size = token.size();
 		int vetNumbers[size];
 
@@ -79,10 +76,11 @@ void readMatrix(){
 			cout << i << ":\t" << vetNumbers[i] << endl;
 		}
 
-
-
 		int dynamicLine = (finalLine - initialLine) + 1;
 		int dynamicColumn = (finalColumn - initialColumn) + 1;
+
+/////////////////////////////////////////////// matriz dinâmica
+
 		int **dynamicMatrix;
 
 		dynamicMatrix = new int *[dynamicLine];
@@ -104,6 +102,29 @@ void readMatrix(){
 			cout << endl;
 		}
 
+////////////////////////////////////////////// matriz transposta
+
+		int **transposedMatrix;
+
+		transposedMatrix = new int *[dynamicColumn];
+
+		for(int i = 0; i < dynamicColumn; i++){
+			transposedMatrix[i] = new int[dynamicLine];
+		}
+
+		cout << endl << endl;
+
+		for(int i = 0; i < dynamicColumn; i++){
+			for(int j = 0; j < dynamicLine; j++){
+				transposedMatrix[i][j] = dynamicMatrix[j][i];
+				cout << transposedMatrix[i][j] << "\t";
+			}
+			cout << endl;
+		}
+
+///////////////////////////////////////////// multiplicação das matrizes
+
+		
 
 		file.close();
 	}

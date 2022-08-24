@@ -13,6 +13,6 @@
 using namespace std;
 
 void writeText();	//Criação de uma matriz no arquivo txt
-void readMatrix();	//Lê a matriz, tokeniza os elementos  e 
+void readMatrix();	//Lê a matriz maior, tokeniza os elementos e cria matriz interna
 
 #endif
