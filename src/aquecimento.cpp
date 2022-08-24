@@ -43,8 +43,6 @@ void readMatrix(){
 
 	file.open("matrix.txt");
 
-	cout << "maxElements: " << maxElements << endl;
-
 	if(file.is_open()){
 		for(int i = 0; i < initialLine; i++){
 			getline(file, numb);
@@ -52,7 +50,6 @@ void readMatrix(){
 
 		while(! file.eof()){
 			getline(file, numb, '\t');
-			cout << numb << endl;
 
 			if(count < maxElements){
 				if((countColumn >= initialColumn) && (countColumn <= finalColumn)){
@@ -73,7 +70,6 @@ void readMatrix(){
 
 		for(int i = 0; i < size; i++){
 			vetNumbers[i] = stoi(token[i]);
-			cout << i << ":\t" << vetNumbers[i] << endl;
 		}
 
 		int dynamicLine = (finalLine - initialLine) + 1;
@@ -89,15 +85,15 @@ void readMatrix(){
 			dynamicMatrix[i] = new int[dynamicColumn];
 		}
 
-		cout << endl << endl;
+		cout << endl << "Matriz normal" << endl;
 
-		int k = 0;
+		int x = 0;
 
 		for(int i = 0; i < dynamicLine; i++){
 			for(int j = 0; j < dynamicColumn; j++){
-				dynamicMatrix[i][j] = vetNumbers[k];
+				dynamicMatrix[i][j] = vetNumbers[x];
 				cout << dynamicMatrix[i][j] << "\t";
-				k++;
+				x ++;
 			}
 			cout << endl;
 		}
@@ -112,7 +108,7 @@ void readMatrix(){
 			transposedMatrix[i] = new int[dynamicLine];
 		}
 
-		cout << endl << endl;
+		cout << endl << "Matriz transposta" << endl;
 
 		for(int i = 0; i < dynamicColumn; i++){
 			for(int j = 0; j < dynamicLine; j++){
@@ -124,7 +120,31 @@ void readMatrix(){
 
 ///////////////////////////////////////////// multiplicação das matrizes
 
-		
+		int **calculatedMatrix;
+
+		calculatedMatrix = new int *[dynamicLine];
+
+		for(int i = 0; i < dynamicLine; i++){
+			calculatedMatrix[i] = new int[dynamicLine];
+		}
+
+		cout << endl << "Matriz calculada" << endl;
+
+		for(int i = 0; i < dynamicLine; i++){
+			for(int k = 0; k < dynamicLine; k++){
+				calculatedMatrix[i][k] = 0;
+				for(int j = 0; j < dynamicColumn; j++){
+					calculatedMatrix[i][k] += dynamicMatrix[i][j] * transposedMatrix[j][k];
+				}
+			}
+		}
+
+		for(int i = 0; i < dynamicLine; i++){
+			for(int j = 0; j < dynamicLine; j++){
+				cout << calculatedMatrix[i][j] << "\t";
+			}
+			cout << endl;
+		}
 
 		file.close();
 	}
