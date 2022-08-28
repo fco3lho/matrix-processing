@@ -3,7 +3,7 @@
 int main(){	
 
 	writeText();
-	readMatrix();
+	execute();
 
 	return 0;
 }

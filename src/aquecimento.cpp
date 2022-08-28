@@ -19,7 +19,7 @@ void writeText(){
 	file.close();
 }
 
-void readMatrix(){
+void execute(){
 	vector<string> token;
 	string numb;
 	ifstream file;
@@ -43,7 +43,7 @@ void readMatrix(){
 
 	file.open("matrix.txt");
 
-	if(file.is_open()){
+	if(file.is_open()){ //Abrindo o arquivo txt
 		for(int i = 0; i < initialLine; i++){
 			getline(file, numb);
 		}
@@ -75,7 +75,7 @@ void readMatrix(){
 		int dynamicLine = (finalLine - initialLine) + 1;
 		int dynamicColumn = (finalColumn - initialColumn) + 1;
 
-/////////////////////////////////////////////// matriz dinâmica
+						/* Matriz Dinâmica */
 
 		int **dynamicMatrix;
 
@@ -85,7 +85,7 @@ void readMatrix(){
 			dynamicMatrix[i] = new int[dynamicColumn];
 		}
 
-		cout << endl << "Matriz normal" << endl;
+		cout << "___________________________________________" << endl << "\tMatriz normal" << endl << endl;
 
 		int x = 0;
 
@@ -98,7 +98,7 @@ void readMatrix(){
 			cout << endl;
 		}
 
-////////////////////////////////////////////// matriz transposta
+						/* Matriz Transposta */
 
 		int **transposedMatrix;
 
@@ -108,7 +108,7 @@ void readMatrix(){
 			transposedMatrix[i] = new int[dynamicLine];
 		}
 
-		cout << endl << "Matriz transposta" << endl;
+		cout << "___________________________________________" << endl << "\tMatriz transposta" << endl << endl;
 
 		for(int i = 0; i < dynamicColumn; i++){
 			for(int j = 0; j < dynamicLine; j++){
@@ -118,7 +118,7 @@ void readMatrix(){
 			cout << endl;
 		}
 
-///////////////////////////////////////////// multiplicação das matrizes
+						/* Multiplicação das matrizes */
 
 		int **calculatedMatrix;
 
@@ -128,7 +128,7 @@ void readMatrix(){
 			calculatedMatrix[i] = new int[dynamicLine];
 		}
 
-		cout << endl << "Matriz calculada" << endl;
+		cout << "___________________________________________" << endl << "\tMatriz calculada" << endl << endl;
 
 		for(int i = 0; i < dynamicLine; i++){
 			for(int k = 0; k < dynamicLine; k++){
@@ -146,10 +146,10 @@ void readMatrix(){
 			cout << endl;
 		}
 
-		file.close();
+		file.close(); //Fecha o arquivo txt
 	}
 
 	else{
-		cout << "Did not open!" << endl;
+		cout << "Não foi possível abrir o arquivo." << endl;
 	}
 }
