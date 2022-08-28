@@ -1,5 +1,5 @@
-#ifndef AQUECIMENTO_HPP
-#define AQUECIMENTO_HPP
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
 #include <iostream>
 #include <string>
