@@ -2,13 +2,12 @@
 
 int main(){	
 
-	unordered_map <int, int**> hashMatrix;
 	int option = -1;
 
 	writeText();
 
 	while(option != 0){
-		execute(hashMatrix);
+		execute();
 
 		cout << endl << "_________________________________________________________" << endl;
 		cout << "Para recortar uma nova matriz, digite 1." << endl;

@@ -16,6 +16,6 @@ using namespace std;
 void writeText();	//Criação de uma matriz no arquivo txt
 double keyFunction(int iLine, int fLine, int iColumn, int fColumn);
 int verify(int key, unordered_map <int, int**> hashMatrix);
-void execute(unordered_map <int, int**> hashMatrix);	//Lê a matriz maior, tokeniza os elementos, cria matriz interna e faz o cálculo da matriz interna com sua transposta
+void execute();	//Lê a matriz maior, tokeniza os elementos, cria matriz interna e faz o cálculo da matriz interna com sua transposta
 
 #endif

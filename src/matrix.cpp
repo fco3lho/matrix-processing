@@ -36,7 +36,7 @@ int verify(int key, unordered_map <int, int**> hashMatrix){
 }
 
 
-void execute(unordered_map <int, int**> hashMatrix){
+void execute(){
 	vector<string> token;
 	string numb;
 	ifstream file;
@@ -60,7 +60,7 @@ void execute(unordered_map <int, int**> hashMatrix){
 	int dynamicLine, dynamicColumn;
 	int **dynamicMatrix, **transposedMatrix, **calculatedMatrix;
 
-	// unordered_map <int, int**> hashMatrix;
+	unordered_map <int, int**> hashMatrix;
 	int key;
 	int **matrixAux;
 	
@@ -74,6 +74,8 @@ void execute(unordered_map <int, int**> hashMatrix){
 				cout << matrixAux[i][j];
 			}
 		}
+
+		cout << "ENTROU CARALHO" << count;
 	}
 	
 	else{
