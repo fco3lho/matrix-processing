@@ -37,11 +37,37 @@ Nessa função foi realizada apenas a criação da matriz NxN no arquivo <code>.
 }
 ```
 
+### Função <i>keyFunction()</i>
+
+Nesta função, tem-se como parâmetro as coordenadas passadas pelo usuário, que transforma essa coordenadas em uma chave única para acesso na Tabela Hash. Segue o corpo de código da função:
+
+```C++
+double keyFunction(int iLine, int fLine, int iColumn, int fColumn){
+	return stoi((to_string(iLine)) + to_string(fLine) + to_string(iColumn) + to_string(fColumn));
+}
+```
+
+### Função <i>verify()</i>
+
+Nesta função, é feita a verificação se a Tabela Hash já possui aquela chave. Se possuir a chave retorna 1, se não possuir retorna 0. Segue o corpo de código da função:
+
+```C++
+int verify(int key, unordered_map <int, int**> hashMatrix){
+	auto item = hashMatrix.find(key);
+
+	if(item != hashMatrix.end()){
+		return 1;
+	}
+
+	return 0;
+}
+```
+
 ### Função <i>execute()</i>
 
-Nessa função foi executado tudo que deveria ser feito no problema, desde a leitura da matriz interna até o calculo de multiplicação entre a matriz interna e sua transposta. 
+Nessa função foi executado tudo que deveria ser feito no problema, desde a leitura da matriz interna até o calculo de multiplicação entre a matriz interna e sua transposta e implementação na Tabela Hash. 
 
-Iniciamos a função declarando as variáveis necessárias e pedindo ao usuário as coordenadas da matriz interna, começando as linhas e colunas em 0 e não em 1. Logo após pedir ao usuário as coordenadas, é utilizado os valores das coordenadas para calcular o máximo de elementos que essa matriz possui. Segue o corpo de código desta parte:
+Iniciamos a função declarando as variáveis necessárias e pedindo ao usuário as coordenadas da matriz interna, começando as linhas e colunas em 0 e não em 1. Logo após pedir ao usuário as coordenadas, é utilizado os valores das coordenadas para calcular o máximo de elementos que essa matriz possui e criar as variáveis que serão necessárias para cálculo entre as matrizes e para pesquisa e inserção na Tabela Hash. Segue o corpo de código desta parte:
 
 ```C++
 vector<string> token;
@@ -64,34 +90,56 @@ cout << "Insira o número da coluna final da matriz interna: ";
 cin >> finalColumn;
 
 int maxElements = ((finalLine+1) - initialLine) * ((finalColumn+1) - initialColumn);
+int dynamicLine, dynamicColumn;
+int **dynamicMatrix, **transposedMatrix, **calculatedMatrix;
+
+unordered_map <int, int**> hashMatrix;
+int key;
+int **matrixAux;
 ```
 
-Logo após, o arquivo <code>.txt</code> é aberto para ser feita a leitura da matriz, usando as coordenadas que o usuário passou para ser feito o recorte, iniciando-se pelas linhas e logo após pelas colunas. A partir do ponto que o caminhamento está nas coordenadas certas, é feita a tokenização de cada elemento até que atinja o máximo de elementos da matriz. Segue o corpo de código desta parte: 
+Logo após, a variável <code>key</code> recebe a função <code>keyFunction()</code> para gerar uma chave única. Gerando a chave única, é feita a pesquisa desta chave na Tabela Hash usando a função <code>verify()</code> em uma condição, onde se a função retornar 1, a chave já está registrada e a matriz já foi calculada, logo o valor é retornado. Segue o corpo de código desta parte da função:
+
+```C++
+key = keyFunction(initialLine, initialColumn, finalLine, finalColumn);
+
+if(verify(key, hashMatrix) == 1){
+	matrixAux = hashMatrix[key];
+
+	for(int i = 0; i < ((finalLine - initialLine) + 1); i++){
+		for(int j = 0; j < ((finalLine - initialLine) + 1); j++){
+			cout << matrixAux[i][j];
+		}
+	}
+}
+```
+
+Se a função <code>verify()</code> retornar 0, é porque a chave não está registrada e a matriz ainda não foi calculada, então o arquivo <code>.txt</code> é aberto para ser feita a leitura da matriz, usando as coordenadas que o usuário passou para ser feito o recorte, iniciando-se pelas linhas e logo após pelas colunas. A partir do ponto que o caminhamento está nas coordenadas certas, é feita a tokenização de cada elemento até que atinja o máximo de elementos da matriz. Segue o corpo de código desta parte: 
 
 ```C++
 file.open("matrix.txt");
 
-if(file.is_open()){ //Abrindo o arquivo txt
-  for(int i = 0; i < initialLine; i++){
-    getline(file, numb);
-  }
+if(file.is_open()){ 	//Abrindo o arquivo txt
+	for(int i = 0; i < initialLine; i++){
+		getline(file, numb);
+	}
 
-  while(! file.eof()){
-    getline(file, numb, '\t');
+	while(! file.eof()){
+		getline(file, numb, '\t');
 
-    if(count < maxElements){
-      if((countColumn >= initialColumn) && (countColumn <= finalColumn)){
-        token.push_back(numb);
-        count++;
-      }
-    }
+		if(count < maxElements){
+			if((countColumn >= initialColumn) && (countColumn <= finalColumn)){
+				token.push_back(numb);
+				count++;
+			}
+		}
 
-    countColumn++;
+		countColumn++;
 
-    if(countColumn == MAXTAM){
-      countColumn = 0;
-    }	
-  }
+		if(countColumn == MAXTAM){
+			countColumn = 0;
+		}	
+	}
 ```
 
 Sendo feita a tokenização, temos os elementos da matriz tokenizados como <code>string</code>, o passo agora é transformá-los em inteiros e para isso, foi criado um vetor do tamanho do número de elementos da matriz para armazená-los. A transformação foi feita da seguinte forma: 
@@ -105,20 +153,19 @@ for(int i = 0; i < size; i++){
 }
 ```
 
-Possuindo todos os elementos da matriz tokenizados e do tipo inteiro, mas ainda em um vetor simples, é feita a criação da matriz dinâmica para armazenar os elementos. Para criar essa matriz dinâmica, foi necessário a criação de duas variáveis, <i>dynamicLine</i> e <i>dynamicColumn</i> que irão auxiliar na criação da matriz simples e da matriz transposta, que é o tamanho do caminhamento da linha e da coluna. Segue o corpo de código desta parte:
+Possuindo todos os elementos da matriz tokenizados e do tipo inteiro, mas ainda em um vetor simples, é feita a criação da matriz dinâmica para armazenar os elementos e fechando o arquivo <code>.txt</code>. Para criar essa matriz dinâmica, foi necessário a criação de duas variáveis, <i>dynamicLine</i> e <i>dynamicColumn</i> que irão auxiliar na criação da matriz simples e da matriz transposta, que é o tamanho do caminhamento da linha e da coluna. Segue o corpo de código desta parte:
 
 ```C++
-int dynamicLine = (finalLine - initialLine) + 1;
-int dynamicColumn = (finalColumn - initialColumn) + 1;
+dynamicLine = (finalLine - initialLine) + 1;
+dynamicColumn = (finalColumn - initialColumn) + 1;
 
-        /* Matriz Dinâmica */
 
-int **dynamicMatrix;
+				/* Matriz Dinâmica */
 
 dynamicMatrix = new int *[dynamicLine];
 
 for(int i = 0; i < dynamicLine; i++){
-  dynamicMatrix[i] = new int[dynamicColumn];
+	dynamicMatrix[i] = new int[dynamicColumn];
 }
 
 cout << "___________________________________________" << endl << "\tMatriz normal" << endl << endl;
@@ -126,72 +173,70 @@ cout << "___________________________________________" << endl << "\tMatriz norma
 int x = 0;
 
 for(int i = 0; i < dynamicLine; i++){
-  for(int j = 0; j < dynamicColumn; j++){
-    dynamicMatrix[i][j] = vetNumbers[x];
-    cout << dynamicMatrix[i][j] << "\t";
-    x ++;
-  }
-  cout << endl;
+	for(int j = 0; j < dynamicColumn; j++){
+		dynamicMatrix[i][j] = vetNumbers[x];
+		cout << dynamicMatrix[i][j] << "\t";
+		x ++;
+	}
+	cout << endl;
 }
+
+file.close(); //Fecha o arquivo txt
 ```
 
 Possuindo a matriz normal pronta, para criar a matriz transposta foi necessário apenas inverter linha e coluna. Segue o corpo de código desta parte:
 
 ```C++
-        /* Matriz Transposta */
-
-int **transposedMatrix;
+				/* Matriz Transposta */
 
 transposedMatrix = new int *[dynamicColumn];
 
 for(int i = 0; i < dynamicColumn; i++){
-  transposedMatrix[i] = new int[dynamicLine];
+	transposedMatrix[i] = new int[dynamicLine];
 }
 
 cout << "___________________________________________" << endl << "\tMatriz transposta" << endl << endl;
 
 for(int i = 0; i < dynamicColumn; i++){
-  for(int j = 0; j < dynamicLine; j++){
-    transposedMatrix[i][j] = dynamicMatrix[j][i];
-    cout << transposedMatrix[i][j] << "\t";
-  }
-  cout << endl;
+	for(int j = 0; j < dynamicLine; j++){
+		transposedMatrix[i][j] = dynamicMatrix[j][i];
+		cout << transposedMatrix[i][j] << "\t";
+	}
+	cout << endl;
 }
+
 ```
 
-Possuindo a matriz normal e a matriz transposta prontas, podemos fazer a multiplicação e armazenar essa multiplicação em uma nova matriz dinâmica e fechando o arquivo <code>.txt</code>. Segue o corpo de código desta parte:
+Possuindo a matriz normal e a matriz transposta prontas, podemos fazer a multiplicação e armazenar essa multiplicação em uma nova matriz dinâmica e na Tabela Hash. Segue o corpo de código desta parte:
 
 ```C++
-          /* Multiplicação das matrizes */
+				/* Multiplicação das matrizes */
 
-  int **calculatedMatrix;
+calculatedMatrix = new int *[dynamicLine];
 
-  calculatedMatrix = new int *[dynamicLine];
-
-  for(int i = 0; i < dynamicLine; i++){
-    calculatedMatrix[i] = new int[dynamicLine];
-  }
-
-  cout << "___________________________________________" << endl << "\tMatriz calculada" << endl << endl;
-
-  for(int i = 0; i < dynamicLine; i++){
-    for(int k = 0; k < dynamicLine; k++){
-      calculatedMatrix[i][k] = 0;
-      for(int j = 0; j < dynamicColumn; j++){
-        calculatedMatrix[i][k] += dynamicMatrix[i][j] * transposedMatrix[j][k];
-      }
-    }
-  }
-
-  for(int i = 0; i < dynamicLine; i++){
-    for(int j = 0; j < dynamicLine; j++){
-      cout << calculatedMatrix[i][j] << "\t";
-    }
-    cout << endl;
-  }
-
-  file.close(); //Fecha o arquivo txt
+for(int i = 0; i < dynamicLine; i++){
+	calculatedMatrix[i] = new int[dynamicLine];
 }
+
+cout << "___________________________________________" << endl << "\tMatriz calculada" << endl << endl;
+
+for(int i = 0; i < dynamicLine; i++){
+	for(int k = 0; k < dynamicLine; k++){
+		calculatedMatrix[i][k] = 0;
+		for(int j = 0; j < dynamicColumn; j++){
+			calculatedMatrix[i][k] += dynamicMatrix[i][j] * transposedMatrix[j][k];
+		}
+	}
+}
+
+for(int i = 0; i < dynamicLine; i++){
+	for(int j = 0; j < dynamicLine; j++){
+		cout << calculatedMatrix[i][j] << "\t";
+	}
+	cout << endl;
+}
+
+hashMatrix.emplace(key, calculatedMatrix);
 ```
 
 ## Observações
