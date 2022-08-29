@@ -19,7 +19,24 @@ void writeText(){
 	file.close();
 }
 
-void execute(){
+
+double keyFunction(int iLine, int fLine, int iColumn, int fColumn){
+	return stoi((to_string(iLine)) + to_string(fLine) + to_string(iColumn) + to_string(fColumn));
+}
+
+
+int verify(int key, unordered_map <int, int**> hashMatrix){
+	auto item = hashMatrix.find(key);
+
+	if(item != hashMatrix.end()){
+		return 1;
+	}
+
+	return 0;
+}
+
+
+void execute(unordered_map <int, int**> hashMatrix){
 	vector<string> token;
 	string numb;
 	ifstream file;
@@ -40,67 +57,91 @@ void execute(){
 	cin >> finalColumn;
 
 	int maxElements = ((finalLine+1) - initialLine) * ((finalColumn+1) - initialColumn);
+	int dynamicLine, dynamicColumn;
+	int **dynamicMatrix, **transposedMatrix, **calculatedMatrix;
 
-	file.open("matrix.txt");
+	// unordered_map <int, int**> hashMatrix;
+	int key;
+	int **matrixAux;
+	
+	key = keyFunction(initialLine, initialColumn, finalLine, finalColumn);
 
-	if(file.is_open()){ //Abrindo o arquivo txt
-		for(int i = 0; i < initialLine; i++){
-			getline(file, numb);
+	if(verify(key, hashMatrix) == 1){
+		matrixAux = hashMatrix[key];
+
+		for(int i = 0; i < ((finalLine - initialLine) + 1); i++){
+			for(int j = 0; j < ((finalLine - initialLine) + 1); j++){
+				cout << matrixAux[i][j];
+			}
 		}
+	}
+	
+	else{
+		file.open("matrix.txt");
 
-		while(! file.eof()){
-			getline(file, numb, '\t');
+		if(file.is_open()){ 	//Abrindo o arquivo txt
+			for(int i = 0; i < initialLine; i++){
+				getline(file, numb);
+			}
 
-			if(count < maxElements){
-				if((countColumn >= initialColumn) && (countColumn <= finalColumn)){
-					token.push_back(numb);
-					count++;
+			while(! file.eof()){
+				getline(file, numb, '\t');
+
+				if(count < maxElements){
+					if((countColumn >= initialColumn) && (countColumn <= finalColumn)){
+						token.push_back(numb);
+						count++;
+					}
 				}
+				
+				countColumn++;
+
+				if(countColumn == MAXTAM){
+					countColumn = 0;
+				}	
 			}
-			
-			countColumn++;
 
-			if(countColumn == MAXTAM){
-				countColumn = 0;
-			}	
-		}
+			int size = token.size();
+			int vetNumbers[size];
 
-		int size = token.size();
-		int vetNumbers[size];
-
-		for(int i = 0; i < size; i++){
-			vetNumbers[i] = stoi(token[i]);
-		}
-
-		int dynamicLine = (finalLine - initialLine) + 1;
-		int dynamicColumn = (finalColumn - initialColumn) + 1;
-
-						/* Matriz Dinâmica */
-
-		int **dynamicMatrix;
-
-		dynamicMatrix = new int *[dynamicLine];
-
-		for(int i = 0; i < dynamicLine; i++){
-			dynamicMatrix[i] = new int[dynamicColumn];
-		}
-
-		cout << "___________________________________________" << endl << "\tMatriz normal" << endl << endl;
-
-		int x = 0;
-
-		for(int i = 0; i < dynamicLine; i++){
-			for(int j = 0; j < dynamicColumn; j++){
-				dynamicMatrix[i][j] = vetNumbers[x];
-				cout << dynamicMatrix[i][j] << "\t";
-				x ++;
+			for(int i = 0; i < size; i++){
+				vetNumbers[i] = stoi(token[i]);
 			}
-			cout << endl;
+
+			dynamicLine = (finalLine - initialLine) + 1;
+			dynamicColumn = (finalColumn - initialColumn) + 1;
+
+							
+							/* Matriz Dinâmica */
+
+			dynamicMatrix = new int *[dynamicLine];
+
+			for(int i = 0; i < dynamicLine; i++){
+				dynamicMatrix[i] = new int[dynamicColumn];
+			}
+
+			cout << "___________________________________________" << endl << "\tMatriz normal" << endl << endl;
+
+			int x = 0;
+
+			for(int i = 0; i < dynamicLine; i++){
+				for(int j = 0; j < dynamicColumn; j++){
+					dynamicMatrix[i][j] = vetNumbers[x];
+					cout << dynamicMatrix[i][j] << "\t";
+					x ++;
+				}
+				cout << endl;
+			}
+
+			file.close(); //Fecha o arquivo txt
 		}
 
+		else{
+			cout << "Não foi possível abrir o arquivo." << endl;
+		}	
+
+						
 						/* Matriz Transposta */
-
-		int **transposedMatrix;
 
 		transposedMatrix = new int *[dynamicColumn];
 
@@ -118,9 +159,8 @@ void execute(){
 			cout << endl;
 		}
 
+						
 						/* Multiplicação das matrizes */
-
-		int **calculatedMatrix;
 
 		calculatedMatrix = new int *[dynamicLine];
 
@@ -146,10 +186,6 @@ void execute(){
 			cout << endl;
 		}
 
-		file.close(); //Fecha o arquivo txt
-	}
-
-	else{
-		cout << "Não foi possível abrir o arquivo." << endl;
+		hashMatrix.emplace(key, calculatedMatrix);
 	}
 }
