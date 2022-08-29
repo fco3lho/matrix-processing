@@ -74,8 +74,6 @@ void execute(){
 				cout << matrixAux[i][j];
 			}
 		}
-
-		cout << "ENTROU CARALHO" << count;
 	}
 	
 	else{
