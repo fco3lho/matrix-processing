@@ -93,8 +93,6 @@ int maxElements = ((finalLine+1) - initialLine) * ((finalColumn+1) - initialColu
 int dynamicLine, dynamicColumn;
 int **dynamicMatrix, **transposedMatrix, **calculatedMatrix;
 
-unordered_map <int, int**> hashMatrix;
-int key;
 int **matrixAux;
 ```
 
@@ -149,7 +147,7 @@ int size = token.size();
 int vetNumbers[size];
 
 for(int i = 0; i < size; i++){
-  vetNumbers[i] = stoi(token[i]);
+	vetNumbers[i] = stoi(token[i]);
 }
 ```
 
@@ -245,6 +243,20 @@ hashMatrix.emplace(key, calculatedMatrix);
   <li>Ao ser pedido ao usuário as coordenadas, o mesmo deverá inseri-las de forma que as coordenadas iniciais sejam menores que as coordenadas finais. Por exemplo: <strong>Linha inicial: 1, Linha final: 5, Coluna inicial: 2, Coluna final: 7.</strong></li>
   <li>A contagem das coordenadas se inicia em 0, então se o usuário deseja, por exemplo, que a linha inicial seja a terceira, deverá inserir a coordenada de linha inicial como 4.</li>
 </ul>
+
+## Funcionamento
+
+Ao executar o programa, o usuário se deparará com o programa aguardando a inserção das linhas e colunas iniciais e finais da matriz que o mesmo deseja recortar da matriz principal da seguinte forma:
+
+<p align="center">
+  <img height="250rem" src="/imgs/Inserção.jpeg">
+</p>
+
+Logo após isso, o programa retornará para o usuário a matriz que ele recortou, a matriz transposta da matriz que ele recortou e a multiplicação entre essas duas matrizes. Logo após imprimir os resultados, o programa deixa ao usuário a opção de recortar uma nova matriz ou sair do programa. Exemplo na imagem abaixo:
+
+<p align="center">
+  <img height="250rem" src="/imgs/Resultado.jpeg">
+</p>
 
 ## Compilação e Execução
 
