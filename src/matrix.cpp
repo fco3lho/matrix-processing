@@ -36,7 +36,7 @@ int verify(int key, unordered_map <int, int**> hashMatrix){
 }
 
 
-void execute(){
+void execute(int key, unordered_map <int, int**> hashMatrix){
 	vector<string> token;
 	string numb;
 	ifstream file;
@@ -60,8 +60,6 @@ void execute(){
 	int dynamicLine, dynamicColumn;
 	int **dynamicMatrix, **transposedMatrix, **calculatedMatrix;
 
-	unordered_map <int, int**> hashMatrix;
-	int key;
 	int **matrixAux;
 	
 	key = keyFunction(initialLine, initialColumn, finalLine, finalColumn);

@@ -2,10 +2,12 @@
 
 int main(){	
 
+	unordered_map <int, int**> hashMatrix;
+	int key = 0;
 	int option = -1;
 
 	writeText();
-	execute();
+	execute(key, hashMatrix);
 
 	while(option != 0){
 		
@@ -16,7 +18,7 @@ int main(){
 		cout <<	"_________________________________________________________" << endl << endl;
 
 		if(option == 1){
-			execute();
+			execute(key, hashMatrix);
 		}
 		else if(option == 0){
 			return 0;
