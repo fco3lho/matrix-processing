@@ -249,13 +249,13 @@ hashMatrix.emplace(key, calculatedMatrix);
 Ao executar o programa, o usuário se deparará com o programa aguardando a inserção das linhas e colunas iniciais e finais da matriz que o mesmo deseja recortar da matriz principal da seguinte forma:
 
 <p align="center">
-  <img height="250rem" src="/imgs/Inserção.jpeg">
+  <img src="/img/Inserção.jpg">
 </p>
 
 Logo após isso, o programa retornará para o usuário a matriz que ele recortou, a matriz transposta da matriz que ele recortou e a multiplicação entre essas duas matrizes. Logo após imprimir os resultados, o programa deixa ao usuário a opção de recortar uma nova matriz ou sair do programa. Exemplo na imagem abaixo:
 
 <p align="center">
-  <img height="250rem" src="/imgs/Resultado.jpeg">
+  <img src="/img/Resultado.jpg">
 </p>
 
 ## Compilação e Execução
