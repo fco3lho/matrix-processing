@@ -280,3 +280,10 @@ O repositório possui um arquivo <i>Makefile</i> que realiza todo o procedimento
     <td>Executa o programa da pasta build após a realização da compilação.</td>
   </tr>
 </table>
+
+## Contatos
+
+<div align="center"> 
+  <a href="https://www.instagram.com/fco3lho/" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+  <a href = "mailto:felipecampos50123@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+  <a href="https://www.linkedin.com/in/fco3lho/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
